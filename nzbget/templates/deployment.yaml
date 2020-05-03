@@ -82,7 +82,9 @@ spec:
       - name: downloads
         {{- if .Values.persistence.downloads.nfs }}
         nfs:
-          {{ .Values.persistence.downloads.nfs }}
+          {{- range $key, $val := .Values.persistence.downloads.nfs }}
+          {{ $key }}: {{ $val | quote }}
+          {{- end }}
         {{- else if .Values.persistence.downloads.enabled }}
         persistentVolumeClaim:
           claimName: {{ if .Values.persistence.downloads.existingClaim }}{{ .Values.persistence.downloads.existingClaim }}{{- else }}{{ template "nzbget.fullname" . }}-downloads{{- end }}
