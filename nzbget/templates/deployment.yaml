@@ -70,12 +70,12 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
       - name: config
-        {{- if .Values.persistence.config.enabled }}
+        {{- if .Values.persistence.config.configMap }}
         persistentVolumeClaim:
-          claimName: {{ if .Values.persistence.config.existingClaim }}{{ .Values.persistence.config.existingClaim }}{{- else }}{{ template "nzbget.fullname" . }}-config{{- end }}
+          configMap:
+            {{ .Values.persistence.config.enabled }}
         {{- else if .Values.persistence.config.configMap }}
-        configMap:
-          {{ .Values.persistence.config.configMap }}
+          claimName: {{ if .Values.persistence.config.existingClaim }}{{ .Values.persistence.config.existingClaim }}{{- else }}{{ template "nzbget.fullname" . }}-config{{- end }}
         {{- else }}
         emptyDir: {}
         {{- end }}
