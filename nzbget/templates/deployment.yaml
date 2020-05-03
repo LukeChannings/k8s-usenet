@@ -71,10 +71,10 @@ spec:
       volumes:
       - name: config
         {{- if .Values.persistence.config.configMap }}
+        configMap:
+          {{ .Values.persistence.config.configMap }}
+        {{- else if .Values.persistence.config.enabled }}
         persistentVolumeClaim:
-          configMap:
-            {{ .Values.persistence.config.enabled }}
-        {{- else if .Values.persistence.config.configMap }}
           claimName: {{ if .Values.persistence.config.existingClaim }}{{ .Values.persistence.config.existingClaim }}{{- else }}{{ template "nzbget.fullname" . }}-config{{- end }}
         {{- else }}
         emptyDir: {}
