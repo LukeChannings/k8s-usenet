@@ -80,7 +80,7 @@ spec:
         emptyDir: {}
         {{- end }}
       - name: downloads
-        {{- if .Values.persistence.downloads.nfs.enabled }}
+        {{- if .Values.persistence.downloads.nfs }}
         nfs:
           server: {{ .Values.persistence.downloads.nfs.server }}
           path: {{ .Values.persistence.downloads.nfs.path }}
