@@ -80,11 +80,10 @@ spec:
         emptyDir: {}
         {{- end }}
       - name: downloads
-        {{- if .Values.persistence.downloads.nfs }}
+        {{- if .Values.persistence.downloads.nfs.enabled }}
         nfs:
-          {{- range $key, $val := .Values.persistence.downloads.nfs }}
-          {{ $key }}: {{ $val | quote }}
-          {{- end }}
+          server: {{ .Values.persistence.downloads.nfs.server }}
+          path: {{ .Values.persistence.downloads.nfs.path }}
         {{- else if .Values.persistence.downloads.enabled }}
         persistentVolumeClaim:
           claimName: {{ if .Values.persistence.downloads.existingClaim }}{{ .Values.persistence.downloads.existingClaim }}{{- else }}{{ template "nzbget.fullname" . }}-downloads{{- end }}
