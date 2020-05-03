@@ -74,21 +74,33 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
       - name: config
-        {{- if .Values.persistence.config.enabled }}
+        {{- if .Values.persistence.config.nfs }}
+        nfs:
+          server: {{ .Values.persistence.config.nfs.server }}
+          path: {{ .Values.persistence.config.nfs.path }}
+        {{- else if .Values.persistence.config.enabled }}
         persistentVolumeClaim:
           claimName: {{ if .Values.persistence.config.existingClaim }}{{ .Values.persistence.config.existingClaim }}{{- else }}{{ template "sonarr.fullname" . }}-config{{- end }}
         {{- else }}
         emptyDir: {}
         {{- end }}
       - name: downloads
-        {{- if .Values.persistence.downloads.enabled }}
+        {{- if .Values.persistence.downloads.nfs }}
+        nfs:
+          server: {{ .Values.persistence.downloads.nfs.server }}
+          path: {{ .Values.persistence.downloads.nfs.path }}
+        {{- else if .Values.persistence.downloads.enabled }}
         persistentVolumeClaim:
           claimName: {{ if .Values.persistence.downloads.existingClaim }}{{ .Values.persistence.downloads.existingClaim }}{{- else }}{{ template "sonarr.fullname" . }}-downloads{{- end }}
         {{- else }}
         emptyDir: {}
         {{- end }}
       - name: tv
-        {{- if .Values.persistence.tv.enabled }}
+        {{- if .Values.persistence.tv.nfs }}
+        nfs:
+          server: {{ .Values.persistence.tv.nfs.server }}
+          path: {{ .Values.persistence.tv.nfs.path }}
+        {{- else if .Values.persistence.tv.enabled }}
         persistentVolumeClaim:
           claimName: {{ if .Values.persistence.tv.existingClaim }}{{ .Values.persistence.tv.existingClaim }}{{- else }}{{ template "sonarr.fullname" . }}-tv{{- end }}
         {{- else }}
