@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 name: nzbget
 description: nzbget makes Usenet as simple and streamlined as possible by automating everything we can.
 home: https://nzbget.net/
