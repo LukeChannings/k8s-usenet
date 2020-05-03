@@ -70,7 +70,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
       - name: config
-        {{- if .Values.persistence.config.configMap }}
+        {{- if .Values.persistence.config.configMapName }}
         configMap:
           name: {{ .Values.persistence.config.configMapName }}
         {{- else if .Values.persistence.config.enabled }}
